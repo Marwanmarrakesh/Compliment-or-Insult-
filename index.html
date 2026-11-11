@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Compliment or Insult? Spin the mood roulette and discover whether you get a ridiculous compliment or a playful roast.">
+  <meta name="theme-color" content="#171522">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Compliment or Insult? — Mood Roulette">
+  <meta property="og:description" content="One tap. One random judgment. Will you get a ridiculous compliment or a friendly roast?">
+  <meta property="og:site_name" content="Compliment or Insult">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Compliment or Insult?">
+  <meta name="twitter:description" content="Spin the mood roulette. Get a compliment or a playful roast.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='85'%3E🎲%3C/text%3E%3C/svg%3E">
+  <title>Compliment or Insult? — Mood Roulette</title>
+  <style>
+    :root{color-scheme:dark;--bg:#11101a;--panel:#1c1a29;--muted:#aaa6bb;--pink:#ff77bd;--purple:#a78bfa;--white:#fbf8ff}
+    *{box-sizing:border-box}
+    body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 50% 0%,#30203d 0%,#171522 42%,#100f18 100%);color:var(--white);font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,sans-serif;display:flex;flex-direction:column}
+    header{width:min(1100px,92%);margin:0 auto;padding:24px 0;display:flex;justify-content:space-between;align-items:center;gap:16px}
+    .brand{font-weight:850;letter-spacing:-.04em;font-size:1.05rem}.brand span{color:var(--pink)}
+    .language{background:#252234;color:white;border:1px solid #3a354d;border-radius:999px;padding:9px 13px;font:inherit;cursor:pointer}
+    main{width:min(760px,92%);margin:auto;display:flex;flex-direction:column;align-items:center;text-align:center;padding:30px 0 70px}
+    .eyebrow{font-size:.75rem;letter-spacing:.2em;text-transform:uppercase;color:#d8a9e9;font-weight:800}
+    h1{font-size:clamp(2.5rem,8vw,5.3rem);line-height:.98;letter-spacing:-.075em;margin:18px 0 16px;font-weight:950}
+    h1 .accent{background:linear-gradient(90deg,var(--pink),#c4a4ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+    .intro{color:#c2bdce;line-height:1.65;max-width:520px;margin:0 auto 28px;font-size:1.02rem}
+    .roulette{width:min(100%,610px);padding:clamp(22px,5vw,38px);border:1px solid #39334b;background:linear-gradient(145deg,rgba(39,35,55,.96),rgba(25,23,37,.96));border-radius:28px;box-shadow:0 25px 80px #0006}
+    .mood{font-size:2.2rem;margin-bottom:12px}
+    .result-label{font-size:.72rem;text-transform:uppercase;letter-spacing:.18em;color:#aaa4bb;font-weight:800;min-height:18px}
+    .result{font-size:clamp(1.25rem,4vw,1.8rem);line-height:1.35;font-weight:800;letter-spacing:-.035em;min-height:100px;display:grid;place-items:center;margin:15px 0 20px}
+    .result.empty{color:#c4bfd0;font-size:1.12rem;font-weight:550;letter-spacing:0}
+    .hit{border:0;border-radius:999px;padding:17px 42px;background:linear-gradient(100deg,#ff7cbb,#b99aff);color:#21152a;font-size:1rem;font-weight:950;letter-spacing:.04em;cursor:pointer;box-shadow:0 10px 30px #df78bb38;transition:transform .16s,filter .16s}
+    .hit:hover{transform:translateY(-3px);filter:brightness(1.08)}.hit:active{transform:scale(.97)}
+    .actions{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:15px}
+    .secondary{border:1px solid #494258;background:#292538;color:#eee9f7;border-radius:999px;padding:10px 17px;font:inherit;font-size:.88rem;cursor:pointer}
+    .secondary:hover{background:#383149}
+    .hint{font-size:.8rem;color:#918ba2;margin-top:20px}
+    .chips{display:flex;gap:9px;flex-wrap:wrap;justify-content:center;margin-top:27px}
+    .chip{font-size:.78rem;color:#c9c2d6;border:1px solid #3a3548;border-radius:999px;padding:8px 12px;background:#211e2c}
+    footer{width:min(1100px,92%);margin:0 auto;padding:20px 0 28px;color:#817b91;font-size:.78rem;text-align:center;border-top:1px solid #ffffff12}footer a{color:#c6b5df;text-decoration:none;margin:0 7px}footer a:hover{text-decoration:underline}
+    .toast{position:fixed;bottom:22px;left:50%;transform:translate(-50%,20px);opacity:0;background:#f8eaff;color:#261a2c;padding:11px 17px;border-radius:999px;font-size:.88rem;font-weight:750;transition:.2s;pointer-events:none}
+    .toast.show{opacity:1;transform:translate(-50%,0)}
+    @media(max-width:520px){header{padding:18px 0}.brand{font-size:.92rem}.roulette{border-radius:22px}.hit{width:100%}.intro{font-size:.94rem}}
+    @media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+  </style>
+</head>
+<body>
+<header>
+  <div class="brand">MOOD<span>ROULETTE</span></div>
+  <select class="language" id="language" aria-label="Choose language">
+    <option value="en">English</option><option value="es">Español</option>
+  </select>
+</header>
+<main>
+  <div class="eyebrow" id="eyebrow">The internet's mood roulette</div>
+  <h1 id="title">Compliment <span class="accent">or Insult?</span></h1>
+  <p class="intro" id="intro">Feeling lucky? Tap the button and let the universe decide whether you deserve a ridiculous compliment or a lovingly savage roast.</p>
+  <section class="roulette" aria-live="polite">
+    <div class="mood" id="mood">🎲</div>
+    <div class="result-label" id="resultLabel">YOUR FATE AWAITS</div>
+    <div class="result empty" id="result">One tap. One random judgment. No hard feelings.</div>
+    <button class="hit" id="hit">HIT ME!</button>
+    <div class="actions">
+      <button class="secondary" id="again" hidden>↻ Try again</button>
+      <button class="secondary" id="share" hidden>↗ Share result</button>
+    </div>
+    <div class="hint" id="hint">50% compliment · 50% roast · 100% unserious</div>
+  </section>
+  <div class="chips"><span class="chip" id="chip1">✨ Questionable praise</span><span class="chip" id="chip2">🔥 Friendly roasts</span><span class="chip" id="chip3">💬 Share the chaos</span></div>
+</main>
+<footer id="footer">Made for laughs. Keep it playful, keep it kind. © <span id="year"></span> Mood Roulette <span class="footer-links">· <a href="privacy.html" id="privacyLink">Privacy</a> · <a href="privacy.html#contact" id="contactLink">Contact</a></span></footer>
+<div class="toast" id="toast" role="status"></div>
+<script>
+const copy = {
+ en:{eyebrow:"The internet's mood roulette",intro:"Feeling lucky? Tap the button and let the universe decide whether you deserve a ridiculous compliment or a lovingly savage roast.",waiting:"YOUR FATE AWAITS",placeholder:"One tap. One random judgment. No hard feelings.",hit:"HIT ME!",again:"↻ Try again",share:"↗ Share result",hint:"50% compliment · 50% roast · 100% unserious",chips:["✨ Questionable praise","🔥 Friendly roasts","💬 Share the chaos"],footer:"Made for laughs. Keep it playful, keep it kind.",privacyLink:"Privacy",contactLink:"Contact",compliment:"COMPLIMENT UNLOCKED",insult:"ROAST INCOMING",copied:"Copied! Send it to your group chat.",shareText:"I got this from Compliment or Insult? — what will you get?",compliments:["You have the energy of someone whose phone battery lasts all day. Iconic.","You look like you know exactly when to leave a party. A rare superpower.","Your Wi-Fi probably connects on the first try because it respects you.","You give off 'reads the instructions before assembling furniture' energy.","If being quietly impressive was an Olympic sport, you'd forget to brag about your gold medal.","You seem like the kind of person dogs trust with their deepest secrets.","Your fridge probably has ingredients that actually become meals. Teach us.","You have the calm confidence of someone who has never sent a text to the wrong group chat.","You radiate the energy of a person who returns shopping carts. Society thanks you.","Somewhere, a houseplant is thriving because you remembered it exists."],insults:["Your houseplants have started a support group. You're the reason.","Your browser has 47 tabs open and somehow none of them are helping.","You treat your alarm like it's making a suggestion.","Your 'quick nap' has its own time zone.","Even your autocorrect has stopped trying to understand you.","Your laundry chair has achieved legal residency.","You have the decision-making speed of a loading screen on hotel Wi-Fi.","Your camera roll is 90% screenshots you'll never look at again.","You could lose a staring contest with a screensaver.","Your to-do list has started referring to you as 'the previous owner'."]},
+ es:{eyebrow:"La ruleta del humor de internet",intro:"¿Te sientes con suerte? Pulsa el botón y deja que el universo decida si mereces un cumplido absurdo o una burla cariñosa.",waiting:"TU DESTINO TE ESPERA",placeholder:"Un toque. Un juicio al azar. Sin rencores.",hit:"¡SORPRÉNDEME!",again:"↻ Otra vez",share:"↗ Compartir",hint:"50% cumplido · 50% roast · 100% sin sentido",chips:["✨ Elogios dudosos","🔥 Bromas amistosas","💬 Comparte el caos"],footer:"Hecho para reír. Con humor y respeto.",privacyLink:"Privacidad",contactLink:"Contacto",compliment:"¡CUMPLIDO DESBLOQUEADO!",insult:"¡SE VIENE EL ROAST!",copied:"¡Copiado! Envíalo a tu grupo.",shareText:"Me salió esto en Compliment or Insult? — ¿qué te tocará a ti?",compliments:["Tienes la energía de alguien cuya batería dura todo el día. Admirable.","Pareces saber exactamente cuándo irte de una fiesta. Un superpoder.","Tu wifi se conecta a la primera porque te respeta.","Das vibra de leer las instrucciones antes de montar un mueble.","Si ser impresionante en silencio fuera un deporte, ganarías sin presumir.","Pareces de esas personas en las que los perros confían sus secretos.","Tu nevera tiene ingredientes que realmente se convierten en comida. Enséñanos.","Tienes la calma de alguien que nunca ha enviado un mensaje al grupo equivocado.","Irradias la energía de alguien que devuelve el carrito del supermercado. Gracias.","Hay una planta que sigue viva porque te acordaste de regarla."],insults:["Tus plantas tienen un grupo de apoyo. Tú eres el motivo.","Tienes 47 pestañas abiertas y ninguna te está ayudando.","Tratas a tu alarma como si fuera una sugerencia.","Tu siesta rápida tiene su propia zona horaria.","Hasta el autocorrector ha dejado de intentar entenderte.","Tu silla de ropa sucia ya tiene residencia permanente.","Tomas decisiones a la velocidad del wifi de un hotel.","El 90% de tu galería son capturas que nunca volverás a mirar.","Podrías perder un duelo de miradas contra un salvapantallas.","Tu lista de tareas ya te llama «el antiguo propietario»."]}
+};
+let last = null;
+let lastWasCompliment = null;
+const $ = id => document.getElementById(id);
+function setLanguage(lang){
+ const c=copy[lang]; document.documentElement.lang=lang;
+ $("privacyLink").textContent=c.privacyLink;$("contactLink").textContent=c.contactLink;
+ $("eyebrow").textContent=c.eyebrow;$("intro").textContent=c.intro;$("resultLabel").textContent=c.waiting;
+ if(!last){$("result").textContent=c.placeholder;$("result").classList.add("empty")}
+ $("hit").textContent=c.hit;$("again").textContent=c.again;$("share").textContent=c.share;$("hint").textContent=c.hint;
+ $("chip1").textContent=c.chips[0];$("chip2").textContent=c.chips[1];$("chip3").textContent=c.chips[2];$("footer").firstChild.textContent=c.footer+" ";
+ if(last){const list=lastWasCompliment?c.compliments:c.insults;const oldLang=lang==="en"?"es":"en";const oldList=lastWasCompliment?copy[oldLang].compliments:copy[oldLang].insults;const idx=oldList.indexOf(last);if(idx>=0)last=list[idx];$("resultLabel").textContent=lastWasCompliment?c.compliment:c.insult;$("result").textContent="“"+last+"”";}
+}
+function spin(){
+ const lang=$("language").value,c=copy[lang],isCompliment=Math.random()<.5;
+ const list=isCompliment?c.compliments:c.insults;
+ let item=list[Math.floor(Math.random()*list.length)];
+ if(last===item) item=list[(list.indexOf(item)+1)%list.length];
+ last=item;lastWasCompliment=isCompliment;$("mood").textContent=isCompliment?"✨":"🔥";$("resultLabel").textContent=isCompliment?c.compliment:c.insult;
+ $("result").textContent="“"+item+"”";$("result").classList.remove("empty");
+ $("again").hidden=false;$("share").hidden=false;
+}
+function showToast(message){$("toast").textContent=message;$("toast").classList.add("show");setTimeout(()=>$("toast").classList.remove("show"),2200)}
+async function shareResult(){
+ const c=copy[$("language").value],text=`${c.shareText}\n“${last}”\n${location.href}`;
+ if(navigator.share){try{await navigator.share({title:"Compliment or Insult?",text})}catch(e){}}
+ else if(navigator.clipboard){try{await navigator.clipboard.writeText(text);showToast(c.copied)}catch(e){showToast(text)}}
+ else {showToast(text)}
+}
+$("hit").addEventListener("click",spin);$("again").addEventListener("click",spin);$("share").addEventListener("click",shareResult);
+$("language").addEventListener("change",e=>setLanguage(e.target.value));
+$("year").textContent=new Date().getFullYear();setLanguage("en");
+</script>
+</body>
+</html>
